@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 
 # Load YOLO model with trained weights
-model_weights_path = r"D:\Major Project Phase 2\Project Prototype-1\backend\models\best.pt"
+model_weights_path = r"D:\Major Project Phase 2\Project Prototype-1\backend\models\Epoch-20\best.pt"
 model = YOLO(model_weights_path)
 
 # Streamlit UI

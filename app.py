@@ -35,7 +35,7 @@ except Exception as e:
     print(f"❌ MongoDB Connection Failed: {e}")
 
 # Load YOLO Model
-MODEL_PATH = r"D:\Major Project Phase 2\Project Prototype-1\backend\models\best.pt"
+MODEL_PATH = r"D:\Major Project Phase 2\Project Prototype-1\backend\models\Epoch-20\best.pt"
 try:
     model = YOLO(MODEL_PATH)
 except Exception as e:
