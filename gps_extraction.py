@@ -4,7 +4,7 @@ from PIL import Image, ExifTags
 from fractions import Fraction  # Import for conversion
 
 # Load Google Maps API Key (Store securely)
-GOOGLE_MAPS_API_KEY = "Your Api key"
+GOOGLE_MAPS_API_KEY = "AIzaSyC7lm9I3ERzHBgoYHpsnLZxNxvwGmoU_ac"
 
 def convert_to_degrees(value):
     """Convert EXIF GPS coordinates to decimal degrees."""

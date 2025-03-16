@@ -15,7 +15,7 @@ import bcrypt
 
 # Initialize Flask App
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # MongoDB Connection
 MONGO_URI = "mongodb://localhost:27017/road_damage_db"
@@ -35,7 +35,7 @@ except Exception as e:
     print(f"❌ MongoDB Connection Failed: {e}")
 
 # Load YOLO Model
-MODEL_PATH = r"C:\Users\shrey\Downloads\BackendRDCSMA-main\BackendRDCSMA-main\models\Epoch-20\best.pt"
+MODEL_PATH = r"D:\Major Project Phase 2\Project Prototype-1\backend\models\Epoch-20\best.pt"
 try:
     model = YOLO(MODEL_PATH)
 except Exception as e:
@@ -54,11 +54,18 @@ def admin_login():
 
     admin = admin_collection.find_one({"email": email})
 
-    if admin and bcrypt.checkpw(password.encode("utf-8"), admin["password"].encode("utf-8")):
-        session["admin_logged_in"] = True
-        return jsonify({"success": True, "message": "Login successful!"})
-    else:
-        return jsonify({"success": False, "message": "Invalid credentials"}), 401
+    if admin:
+        # Ensure the stored password is in bytes format
+        stored_password = admin["password"]
+        if isinstance(stored_password, str):
+            stored_password = stored_password.encode("utf-8")  # Convert to bytes if it's a string
+
+        # Check the password
+        if bcrypt.checkpw(password.encode("utf-8"), stored_password):
+            session["admin_logged_in"] = True
+            return jsonify({"success": True, "message": "Login successful!"})
+    
+    return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
 # Admin Logout Route
 # Logout Admin
@@ -204,4 +211,3 @@ def user_reports():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
