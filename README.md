@@ -2,6 +2,7 @@
 This project is a web-based platform that enables users to report road damages using AI-powered image analysis and automatic geo-tagging. The system provides an admin dashboard for municipal authorities to manage complaints and prioritize road repairs efficiently.
 
 🌟 Features
+
 🔍 AI-Based Road Damage Detection
 ✅ Users upload road images, and the system detects cracks using YOLOv8 AI model.
 ✅ Identifies crack type and depth for accurate damage assessment.
