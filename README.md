@@ -1,49 +1,37 @@
-🚧 Road Damage Detection & Complaint Management System
-This project is a web-based platform that enables users to report road damages using AI-powered image analysis and automatic geo-tagging. The system provides an admin dashboard for municipal authorities to manage complaints and prioritize road repairs efficiently.
+# Road Damage Detection & Complaint Management System  
 
-🌟 Features
-🔍 AI-Based Road Damage Detection
-✅ Users upload road images, and the system detects cracks using YOLOv8 AI model.
-✅ Identifies crack type and depth for accurate damage assessment.
+This project is a web-based platform that enables users to report road damages using AI-powered image analysis and automatic geo-tagging. The system provides an admin dashboard for municipal authorities to manage complaints and prioritize road repairs efficiently.  
 
-📍 Automatic Geo-Tagging
-✅ Extracts GPS coordinates from uploaded images.
-✅ Converts coordinates into real-world locations.
+## Features  
 
-🛠 Admin Dashboard for Complaint Management
-✅ Admin Authentication for secure access.
-✅ Dynamic Report Table with sorting based on:
+### AI-Based Road Damage Detection  
+Users upload road images, and the system detects cracks using the YOLOv8 AI model. It identifies the crack type and depth for accurate damage assessment.  
 
-Depth value (higher depth = higher priority).
-Multiple user confirmations for the same location.
-✅ Real-time status updates for complaints.
-👥 User Dashboard
-✅ Users can view past reports and track their status.
-✅ Intuitive UI for submitting complaints.
+### Automatic Geo-Tagging  
+The system extracts GPS coordinates from uploaded images and converts them into real-world locations.  
 
-🔢 Priority Calculation System
-1️⃣ Depth-Based Priority (10 Points)
+### Admin Dashboard for Complaint Management  
+The admin dashboard includes authentication for secure access. A dynamic report table allows sorting based on depth value, where higher depth indicates higher priority, and multiple user confirmations for the same location increase priority. Real-time status updates are provided for complaints.  
 
-Reports with greater crack depth values are ranked higher.
-2️⃣ Multiple User Reports (10 Points)
+### User Dashboard  
+Users can view past reports and track their status. The interface is designed for an intuitive experience when submitting complaints.  
 
-If 2 or more users report the same location & crack type, priority increases.
-🔝 Sorting Order:
+### Priority Calculation System  
 
-Priority Score (Higher First)
-Depth Value (Higher First, if Scores are Equal)
-📷 Screenshots
-(Add screenshots of the system here!)
+#### Depth-Based Priority  
+Reports with greater crack depth values are ranked higher.  
 
-🛠 Technologies Used
-Frontend
-React.js
-HTML, CSS
-Bootstrap / Tailwind (if applicable)
-Backend
-Node.js & Express.js (API Handling)
-Flask (AI Model Integration)
-PostgreSQL / MySQL / MongoDB (Database)
-AI Model
-YOLOv8 (for road damage detection)
-PyTorch / TensorFlow
+#### Multiple User Reports  
+If two or more users report the same location and crack type, the priority increases.  
+
+#### Sorting Order  
+Priority score is the primary sorting factor, followed by depth value in case of equal scores.  
+
+
+## Technologies Used  
+
+### Frontend  
+React.js, HTML, CSS, Bootstrap or Tailwind  
+
+### Backend  
+Node.js, Flask, PostgreSQL or MySQL, PyTorch, TensorFlow  
