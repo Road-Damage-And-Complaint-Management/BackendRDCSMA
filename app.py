@@ -11,10 +11,11 @@ from gps_extraction import extract_gps
 from pymongo import MongoClient
 import bcrypt
 from bson import ObjectId
+from werkzeug.utils import secure_filename
 # Initialize Flask App
 app = Flask(__name__)
 CORS(app)
-
+from flask import send_from_directory
 # Configure session
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -79,7 +80,7 @@ def upload_image():
     file_path = os.path.join(UPLOAD_FOLDER, filename)
     file.save(file_path)
 
-    user_name = request.form.get("user_email", "anonymous")  # ✅ Grab name from form
+    user_name = request.form.get("user_email", "anonymous")
 
     try:
         image = Image.open(file_path)
@@ -100,8 +101,19 @@ def upload_image():
         if detections and detections.boxes:
             for box in detections.boxes:
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
-                cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (0, 255, 0), 2)
                 conf_value = float(box.conf[0])
+                class_id = int(box.cls[0])
+                label = model.names[class_id]  # e.g., "D00", "D10"
+
+                # Draw rectangle (green)
+                cv2.rectangle(image_bgr, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+                # Draw label with confidence
+                text = f"{label} {conf_value:.2f}"
+                (text_width, text_height), _ = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+                cv2.rectangle(image_bgr, (x1, y1 - text_height - 6), (x1 + text_width, y1), (0, 255, 0), -1)
+                cv2.putText(image_bgr, text, (x1, y1 - 4), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+
                 depth_points.append(conf_value)
 
             cv2.imwrite(detected_image_path, image_bgr)
@@ -116,7 +128,7 @@ def upload_image():
         detection_data = {
             "original_image": filename,
             "detected_image": detected_image_filename,
-            "user_name": user_name,  # ✅ Save to DB
+            "user_name": user_name,
             "gps_latitude": gps_data.get("gps_latitude", "Unknown"),
             "gps_longitude": gps_data.get("gps_longitude", "Unknown"),
             "location": gps_data.get("location", "Unknown Location"),
@@ -138,8 +150,12 @@ def upload_image():
 
     except Exception as e:
         return jsonify({"error": f"❌ Processing failed: {str(e)}"}), 500
+
 def get_uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
 
 @app.route("/reports", methods=["GET"])
 def fetch_reports():
